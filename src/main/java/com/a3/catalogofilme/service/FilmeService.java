@@ -20,7 +20,7 @@ public class FilmeService {
         return filmeRepository.findAll();
     }
 
-    public Optional<Filme> BuscarPorId(Long id) {
+    public Optional<Filme> BuscarPorId(Integer id) {
         return filmeRepository.findById(id);
     }
 
@@ -28,7 +28,7 @@ public class FilmeService {
         return filmeRepository.save(filme);
     }
 
-    public Optional<Filme> atualizar(Long id, Filme filmeAtualizado) {
+    public Optional<Filme> atualizar(Integer id, Filme filmeAtualizado) {
             return filmeRepository.findById(id).map(filme -> {
                 filme.setTitulo(filmeAtualizado.getTitulo());
                 filme.setLancamento(filmeAtualizado.getLancamento());
@@ -39,7 +39,7 @@ public class FilmeService {
                 return filmeRepository.save(filme);
             });
         }
-public boolean deletar(Long id) {
+public boolean deletar(Integer id) {
     if (filmeRepository.existsById(id)) {
         filmeRepository.deleteById(id);
         return true;
