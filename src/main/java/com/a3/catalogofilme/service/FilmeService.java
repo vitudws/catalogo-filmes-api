@@ -31,10 +31,9 @@ public class FilmeService {
     public Optional<Filme> atualizar(Long id, Filme filmeAtualizado) {
             return filmeRepository.findById(id).map(filme -> {
                 filme.setTitulo(filmeAtualizado.getTitulo());
-                filme.setGenero(filmeAtualizado.getGenero());
-                filme.setAnoLancamento(filmeAtualizado.getAnoLancamento());
-                filme.setDiretor(filmeAtualizado.getDiretor());
-                filme.setDuracao(filmeAtualizado.getDuracao());
+                filme.setLancamento(filmeAtualizado.getLancamento());
+                filme.setIdDiretor(filmeAtualizado.getIdDiretor());
+                filme.setDuracaoMin(filmeAtualizado.getDuracaoMin());
                 filme.setClassificacao(filmeAtualizado.getClassificacao());
 
                 return filmeRepository.save(filme);
