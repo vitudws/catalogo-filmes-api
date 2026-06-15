@@ -32,145 +32,248 @@
         <button id="novoFilme">Adicionar Filme</button>
     </div>
 
+    <div id="formCadastro" class="form-cadastro" style="display: none;">
+        <input id="tituloFilme" placeholder="Título do filme">
+
+        <input id="lancamentoFilme" type="date">
+
+        <input id="classificacaoFilme" placeholder="Classificação">
+
+        <input id="duracaoFilme" type="number" placeholder="Duração em minutos">
+
+        <select id="selectDiretor">
+            <option value="">Selecione o diretor</option>
+        </select>
+
+        <select id="selectGeneros" multiple size="5"></select>
+
+        <button id="salvarFilme">Salvar Filme</button>
+    </div>
+
     <div class="galeria" id="listaFilmes"></div>
 
     <script>
-    const listaFilmes = document.getElementById("listaFilmes");
-    const filtroGenero = document.getElementById("filtroGenero");
-    const pesquisa = document.getElementById("pesquisa");
-    const novoFilme = document.getElementById("novoFilme");
+        const listaFilmes = document.getElementById("listaFilmes");
+        const filtroGenero = document.getElementById("filtroGenero");
+        const pesquisa = document.getElementById("pesquisa");
+        const novoFilme = document.getElementById("novoFilme");
 
-    let filmesCarregados = [];
-    let generosDisponiveis = [];
-    let diretoresDisponiveis = [];
+        const formCadastro = document.getElementById("formCadastro");
+        const tituloFilme = document.getElementById("tituloFilme");
+        const lancamentoFilme = document.getElementById("lancamentoFilme");
+        const classificacaoFilme = document.getElementById("classificacaoFilme");
+        const duracaoFilme = document.getElementById("duracaoFilme");
+        const selectDiretor = document.getElementById("selectDiretor");
+        const selectGeneros = document.getElementById("selectGeneros");
+        const salvarFilme = document.getElementById("salvarFilme");
 
-    async function carregarFilmes() {
-        try {
-            const resposta = await fetch("/filmes");
+        let filmesCarregados = [];
+        let generosDisponiveis = [];
+        let diretoresDisponiveis = [];
 
-            if (!resposta.ok) {
-                throw new Error("Erro ao buscar filmes");
+        async function carregarFilmes() {
+            try {
+                const resposta = await fetch("/filmes");
+
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar filmes");
+                }
+
+                filmesCarregados = await resposta.json();
+
+                await carregarGeneros();
+                await carregarDiretores();
+
+                preencherFiltro();
+                preencherSelectDiretores();
+                preencherSelectGeneros();
+                aplicarFiltros();
+
+            } catch (erro) {
+                listaFilmes.innerHTML = "<p>Erro ao carregar filmes. Verifique se a API está rodando.</p>";
             }
-
-            filmesCarregados = await resposta.json();
-
-            await carregarGeneros();
-            await carregarDiretores();
-            preencherFiltro();
-            aplicarFiltros();
-
-        } catch (erro) {
-            listaFilmes.innerHTML = "<p>Erro ao carregar filmes. Verifique se a API está rodando.</p>";
         }
-    }
 
-    async function carregarGeneros() {
-        try {
-            const resposta = await fetch("/generos");
+        async function carregarGeneros() {
+            try {
+                const resposta = await fetch("/generos");
 
-            if (!resposta.ok) {
-                throw new Error("Erro ao buscar gêneros");
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar gêneros");
+                }
+
+                generosDisponiveis = await resposta.json();
+
+            } catch (erro) {
+                generosDisponiveis = [];
+
+                filmesCarregados.forEach(filme => {
+                    if (filme.generos) {
+                        filme.generos.forEach(genero => {
+                            const jaExiste = generosDisponiveis.some(
+                                g => g.idGenero === genero.idGenero
+                            );
+
+                            if (!jaExiste) {
+                                generosDisponiveis.push(genero);
+                            }
+                        });
+                    }
+                });
             }
+        }
 
-            generosDisponiveis = await resposta.json();
+        async function carregarDiretores() {
+            try {
+                const resposta = await fetch("/diretores");
 
-        } catch (erro) {
-            generosDisponiveis = [];
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar diretores");
+                }
 
-            filmesCarregados.forEach(filme => {
-                if (filme.generos) {
-                    filme.generos.forEach(genero => {
-                        const jaExiste = generosDisponiveis.some(g => g.idGenero === genero.idGenero);
+                diretoresDisponiveis = await resposta.json();
+
+            } catch (erro) {
+                diretoresDisponiveis = [];
+
+                filmesCarregados.forEach(filme => {
+                    if (filme.diretor) {
+                        const jaExiste = diretoresDisponiveis.some(
+                            diretor => diretor.idDiretor === filme.diretor.idDiretor
+                        );
 
                         if (!jaExiste) {
-                            generosDisponiveis.push(genero);
+                            diretoresDisponiveis.push(filme.diretor);
                         }
-                    });
-                }
+                    }
+                });
+            }
+        }
+
+        function preencherFiltro() {
+            filtroGenero.innerHTML = `<option value="Todos">Todos os gêneros</option>`;
+
+            generosDisponiveis.forEach(genero => {
+                filtroGenero.innerHTML += `
+                    <option value="${genero.nomeGenero}">
+                        ${genero.nomeGenero}
+                    </option>
+                `;
             });
         }
-    }
 
-    async function carregarDiretores() {
-        try {
-            const resposta = await fetch("/diretores");
+        function preencherSelectDiretores() {
+            selectDiretor.innerHTML = `<option value="">Selecione o diretor</option>`;
 
-            if (!resposta.ok) {
-                throw new Error("Erro ao buscar diretores");
+            diretoresDisponiveis.forEach(diretor => {
+                selectDiretor.innerHTML += `
+                    <option value="${diretor.idDiretor}">
+                        ${diretor.nomeDiretor}
+                    </option>
+                `;
+            });
+        }
+
+        function preencherSelectGeneros() {
+            selectGeneros.innerHTML = "";
+
+            generosDisponiveis.forEach(genero => {
+                selectGeneros.innerHTML += `
+                    <option value="${genero.idGenero}">
+                        ${genero.nomeGenero}
+                    </option>
+                `;
+            });
+        }
+
+        function aplicarFiltros() {
+            const texto = pesquisa.value.toLowerCase();
+            const generoSelecionado = filtroGenero.value;
+
+            const filmesFiltrados = filmesCarregados.filter(filme => {
+                const titulo = filme.titulo ? filme.titulo.toLowerCase() : "";
+
+                const nomeDiretor = filme.diretor && filme.diretor.nomeDiretor
+                    ? filme.diretor.nomeDiretor.toLowerCase()
+                    : "";
+
+                const generosDoFilme = filme.generos
+                    ? filme.generos.map(genero => genero.nomeGenero)
+                    : [];
+
+                const textoGeneros = generosDoFilme.join(" ").toLowerCase();
+
+                const batePesquisa =
+                    titulo.includes(texto) ||
+                    nomeDiretor.includes(texto) ||
+                    textoGeneros.includes(texto);
+
+                const bateGenero =
+                    generoSelecionado === "Todos" ||
+                    generosDoFilme.includes(generoSelecionado);
+
+                return batePesquisa && bateGenero;
+            });
+
+            mostrarFilmes(filmesFiltrados);
+        }
+
+        function mostrarFilmes(filmes) {
+            listaFilmes.innerHTML = "";
+
+            if (filmes.length === 0) {
+                listaFilmes.innerHTML = "<p>Nenhum filme encontrado.</p>";
+                return;
             }
 
-            diretoresDisponiveis = await resposta.json();
+            filmes.forEach(filme => {
+                const generos = filme.generos && filme.generos.length > 0
+                    ? filme.generos.map(genero => genero.nomeGenero).join(", ")
+                    : "Não informado";
 
-        } catch (erro) {
-            diretoresDisponiveis = [];
+                const nomeDiretor = filme.diretor && filme.diretor.nomeDiretor
+                    ? filme.diretor.nomeDiretor
+                    : "Não informado";
 
-            filmesCarregados.forEach(filme => {
-                if (filme.diretor) {
-                    const jaExiste = diretoresDisponiveis.some(
-                        diretor => diretor.idDiretor === filme.diretor.idDiretor
-                    );
+                const item = document.createElement("div");
+                item.className = "item";
 
-                    if (!jaExiste) {
-                        diretoresDisponiveis.push(filme.diretor);
-                    }
-                }
+                item.innerHTML = `
+                    <div class="poster-placeholder">${filme.titulo}</div>
+
+                    <div class="painel">
+                        <h2>${filme.titulo}</h2>
+                        <h3>Ano de lançamento: ${formatarAno(filme.lancamento)}</h3>
+                        <h3>Classificação: ${filme.classificacao}</h3>
+                        <h3>Gêneros: ${generos}</h3>
+                        <h3>Duração: ${filme.duracaoMin} min</h3>
+                        <h3>Diretor: ${nomeDiretor}</h3>
+
+                        <button onclick="verMais(${filme.idFilme})">Ver mais</button>
+                        <button onclick="excluirFilme(${filme.idFilme})">Excluir</button>
+                    </div>
+                `;
+
+                listaFilmes.appendChild(item);
             });
         }
-    }
 
-    function preencherFiltro() {
-        filtroGenero.innerHTML = `<option value="Todos">Todos os gêneros</option>`;
+        function formatarAno(data) {
+            if (!data) {
+                return "Não informado";
+            }
 
-        generosDisponiveis.forEach(genero => {
-            filtroGenero.innerHTML += `
-                <option value="${genero.nomeGenero}">
-                    ${genero.nomeGenero}
-                </option>
-            `;
-        });
-    }
-
-    function aplicarFiltros() {
-        const texto = pesquisa.value.toLowerCase();
-        const generoSelecionado = filtroGenero.value;
-
-        const filmesFiltrados = filmesCarregados.filter(filme => {
-            const titulo = filme.titulo ? filme.titulo.toLowerCase() : "";
-
-            const nomeDiretor = filme.diretor && filme.diretor.nomeDiretor
-                ? filme.diretor.nomeDiretor.toLowerCase()
-                : "";
-
-            const generosDoFilme = filme.generos
-                ? filme.generos.map(genero => genero.nomeGenero)
-                : [];
-
-            const textoGeneros = generosDoFilme.join(" ").toLowerCase();
-
-            const batePesquisa =
-                titulo.includes(texto) ||
-                nomeDiretor.includes(texto) ||
-                textoGeneros.includes(texto);
-
-            const bateGenero =
-                generoSelecionado === "Todos" ||
-                generosDoFilme.includes(generoSelecionado);
-
-            return batePesquisa && bateGenero;
-        });
-
-        mostrarFilmes(filmesFiltrados);
-    }
-
-    function mostrarFilmes(filmes) {
-        listaFilmes.innerHTML = "";
-
-        if (filmes.length === 0) {
-            listaFilmes.innerHTML = "<p>Nenhum filme encontrado.</p>";
-            return;
+            return String(data).substring(0, 4);
         }
 
-        filmes.forEach(filme => {
+        function verMais(id) {
+            const filme = filmesCarregados.find(filme => filme.idFilme === id);
+
+            if (!filme) {
+                alert("Filme não encontrado.");
+                return;
+            }
+
             const generos = filme.generos && filme.generos.length > 0
                 ? filme.generos.map(genero => genero.nomeGenero).join(", ")
                 : "Não informado";
@@ -179,163 +282,109 @@
                 ? filme.diretor.nomeDiretor
                 : "Não informado";
 
-            const item = document.createElement("div");
-            item.className = "item";
-
-            item.innerHTML = `
-                <div class="poster-placeholder">${filme.titulo}</div>
-
-                <div class="painel">
-                    <h2>${filme.titulo}</h2>
-                    <h3>Ano de lançamento: ${formatarAno(filme.lancamento)}</h3>
-                    <h3>Classificação: ${filme.classificacao}</h3>
-                    <h3>Gêneros: ${generos}</h3>
-                    <h3>Duração: ${filme.duracaoMin} min</h3>
-                    <h3>Diretor: ${nomeDiretor}</h3>
-
-                    <button onclick="verMais(${filme.idFilme})">Ver mais</button>
-                    <button onclick="excluirFilme(${filme.idFilme})">Excluir</button>
-                </div>
-            `;
-
-            listaFilmes.appendChild(item);
-        });
-    }
-
-    function formatarAno(data) {
-        if (!data) {
-            return "Não informado";
+            alert(
+                `Título: ${filme.titulo}\n` +
+                `Lançamento: ${filme.lancamento}\n` +
+                `Classificação: ${filme.classificacao}\n` +
+                `Gêneros: ${generos}\n` +
+                `Duração: ${filme.duracaoMin} min\n` +
+                `Diretor: ${nomeDiretor}`
+            );
         }
 
-        return String(data).substring(0, 4);
-    }
+        async function excluirFilme(id) {
+            const confirmar = confirm("Excluir este filme?");
 
-    function verMais(id) {
-        const filme = filmesCarregados.find(filme => filme.idFilme === id);
-
-        if (!filme) {
-            alert("Filme não encontrado.");
-            return;
-        }
-
-        const generos = filme.generos && filme.generos.length > 0
-            ? filme.generos.map(genero => genero.nomeGenero).join(", ")
-            : "Não informado";
-
-        const nomeDiretor = filme.diretor && filme.diretor.nomeDiretor
-            ? filme.diretor.nomeDiretor
-            : "Não informado";
-
-        alert(
-            `Título: ${filme.titulo}\n` +
-            `Lançamento: ${filme.lancamento}\n` +
-            `Classificação: ${filme.classificacao}\n` +
-            `Gêneros: ${generos}\n` +
-            `Duração: ${filme.duracaoMin} min\n` +
-            `Diretor: ${nomeDiretor}`
-        );
-    }
-
-    async function excluirFilme(id) {
-        const confirmar = confirm("Excluir este filme?");
-
-        if (!confirmar) {
-            return;
-        }
-
-        try {
-            const resposta = await fetch(`/filmes/${id}`, {
-                method: "DELETE"
-            });
-
-            if (!resposta.ok) {
-                throw new Error("Erro ao excluir filme");
+            if (!confirmar) {
+                return;
             }
 
-            await carregarFilmes();
+            try {
+                const resposta = await fetch(`/filmes/${id}`, {
+                    method: "DELETE"
+                });
 
-        } catch (erro) {
-            alert("Erro ao excluir filme.");
-        }
-    }
+                if (!resposta.ok) {
+                    throw new Error("Erro ao excluir filme");
+                }
 
-    async function adicionarFilme() {
-        const titulo = prompt("Título do filme:");
-        if (!titulo) return;
+                await carregarFilmes();
 
-        const lancamento = prompt("Data de lançamento no formato AAAA-MM-DD:", "2024-01-01");
-        if (!lancamento) return;
-
-        const classificacao = prompt("Classificação indicativa:", "12");
-        if (!classificacao) return;
-
-        const duracaoMin = Number(prompt("Duração em minutos:", "120"));
-        if (!duracaoMin) return;
-
-        let textoDiretores = "Escolha o diretor pelo número:\n\n";
-
-        diretoresDisponiveis.forEach(diretor => {
-            textoDiretores += `${diretor.idDiretor} - ${diretor.nomeDiretor}\n`;
-        });
-
-        const diretorDigitado = prompt(textoDiretores, "1");
-
-        const idDiretor = Number(diretorDigitado);
-
-        if (!idDiretor) {
-            alert("Diretor inválido.");
-            return;
+            } catch (erro) {
+                alert("Erro ao excluir filme.");
+            }
         }
 
-        let textoGeneros = "Escolha os gêneros pelo ID, separados por vírgula:\n\n";
+        async function adicionarFilme() {
+            const generoIds = Array.from(selectGeneros.selectedOptions)
+                .map(option => Number(option.value));
 
-        generosDisponiveis.forEach(genero => {
-            textoGeneros += `${genero.idGenero} - ${genero.nomeGenero}\n`;
-        });
+            const filme = {
+                titulo: tituloFilme.value,
+                lancamento: lancamentoFilme.value,
+                classificacao: classificacaoFilme.value,
+                duracaoMin: Number(duracaoFilme.value),
+                idDiretor: Number(selectDiretor.value),
+                generoIds: generoIds
+            };
 
-        const generosDigitados = prompt(textoGeneros, "1,2");
+            if (
+                !filme.titulo ||
+                !filme.lancamento ||
+                !filme.classificacao ||
+                !filme.duracaoMin ||
+                !filme.idDiretor
+            ) {
+                alert("Preencha todos os campos obrigatórios.");
+                return;
+            }
 
-        const generoIds = generosDigitados
-            ? generosDigitados
-                .split(",")
-                .map(id => Number(id.trim()))
-                .filter(id => !isNaN(id))
-            : [];
+            try {
+                const resposta = await fetch("/filmes", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(filme)
+                });
 
-        const filme = {
-            titulo: titulo,
-            lancamento: lancamento,
-            classificacao: classificacao,
-            duracaoMin: duracaoMin,
-            idDiretor: idDiretor,
-            generoIds: generoIds
+                if (!resposta.ok) {
+                    throw new Error("Erro ao adicionar filme");
+                }
+
+                limparFormulario();
+                formCadastro.style.display = "none";
+
+                await carregarFilmes();
+
+            } catch (erro) {
+                alert("Erro ao adicionar filme. Verifique os dados e a API.");
+            }
+        }
+
+        function limparFormulario() {
+            tituloFilme.value = "";
+            lancamentoFilme.value = "";
+            classificacaoFilme.value = "";
+            duracaoFilme.value = "";
+            selectDiretor.value = "";
+
+            Array.from(selectGeneros.options).forEach(option => {
+                option.selected = false;
+            });
+        }
+
+        pesquisa.oninput = aplicarFiltros;
+        filtroGenero.onchange = aplicarFiltros;
+
+        novoFilme.onclick = () => {
+            formCadastro.style.display =
+                formCadastro.style.display === "none" ? "flex" : "none";
         };
 
-        try {
-            const resposta = await fetch("/filmes", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(filme)
-            });
+        salvarFilme.onclick = adicionarFilme;
 
-            if (!resposta.ok) {
-                throw new Error("Erro ao adicionar filme");
-            }
-
-            await carregarFilmes();
-
-        } catch (erro) {
-            alert("Erro ao adicionar filme. Verifique os dados e a API.");
-        }
-    }
-
-    pesquisa.oninput = aplicarFiltros;
-    filtroGenero.onchange = aplicarFiltros;
-    novoFilme.onclick = adicionarFilme;
-
-    carregarFilmes();
-</script>
+        carregarFilmes();
+    </script>
 </body>
 </html>
