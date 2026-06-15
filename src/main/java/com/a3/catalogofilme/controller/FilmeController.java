@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/**
+ * Controller responsável pelos endpoints da API de filmes.
+ * Recebe as requisições HTTP e chama a camada de serviço.
+ */
 @RestController
 @RequestMapping("/filmes")
 public class FilmeController {
@@ -17,11 +22,13 @@ public class FilmeController {
         this.filmeService = filmeService;
     }
 
+// Lista todos os filmes cadastrados no banco.    
     @GetMapping
     public List<Filme> listarTodos() {
         return filmeService.listarTodos();
     }
 
+// Busca um filme pelo ID informado na URL.
     @GetMapping("/{id}")
     public ResponseEntity<Filme> buscarPorId(@PathVariable Integer id) {
         return filmeService.BuscarPorId(id)
@@ -29,11 +36,13 @@ public class FilmeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+// Cadastra um novo filme usando os dados enviados no corpo da requisição.
     @PostMapping
     public Filme cadastrar(@RequestBody Filme filme) {
         return filmeService.cadastrar(filme);
     }
 
+// Atualiza os dados de um filme existente.
     @PutMapping("/{id}")
     public ResponseEntity<Filme> atualizar(@PathVariable Integer id, @RequestBody Filme filme) {
         return filmeService.atualizar(id, filme)
@@ -41,6 +50,7 @@ public class FilmeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+// Remove um filme pelo ID informado.
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         boolean deletado = filmeService.deletar(id);
