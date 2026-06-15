@@ -76,3 +76,12 @@ catalogo_filmes
 A URL de conexão local é:
 
 jdbc:mysql://localhost:3306/catalogo_filmes
+
+## Estrutura do projeto
+
+- controller: recebe as requisições HTTP da API.
+- service: concentra a lógica de cadastro, busca, atualização e exclusão.
+- repository: faz a comunicação com o banco usando Spring Data JPA.
+- model: representa a tabela filmes do banco de dados.
+- database: contém o script SQL do banco.
+- postman: contém a collection para testar os endpoints.
