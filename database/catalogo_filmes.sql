@@ -1,3 +1,5 @@
+-- Script de criação e população do banco de dados catalogo_filmes.
+-- Este arquivo cria o banco, cria as tabelas e insere dados iniciais para teste da API.
 CREATE DATABASE  IF NOT EXISTS `catalogo_filmes` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `catalogo_filmes`;
 -- MySQL dump 10.13  Distrib 8.0.45, for Win64 (x86_64)
