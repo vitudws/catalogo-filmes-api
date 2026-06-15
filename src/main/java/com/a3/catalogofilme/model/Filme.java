@@ -2,6 +2,8 @@ package com.a3.catalogofilme.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Entidade que representa a tabela filmes do banco de dados.
@@ -17,7 +19,7 @@ public class Filme {
     @Column(name = "id_filme")
     private Integer idFilme;
 
-    // Nome do filme.
+    // Título do filme.
     @Column(name = "titulo")
     private String titulo;
 
@@ -36,6 +38,16 @@ public class Filme {
     // ID do diretor relacionado ao filme.
     @Column(name = "id_diretor")
     private Integer idDiretor;
+
+    // Relação muitos-para-muitos entre filmes e gêneros.
+    // A tabela genero_filme liga id_filme com id_genero.
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "genero_filme",
+            joinColumns = @JoinColumn(name = "id_filme"),
+            inverseJoinColumns = @JoinColumn(name = "id_genero")
+    )
+    private Set<Genero> generos = new HashSet<>();
 
     public Integer getIdFilme() {
         return idFilme;
@@ -83,5 +95,13 @@ public class Filme {
 
     public void setIdDiretor(Integer idDiretor) {
         this.idDiretor = idDiretor;
+    }
+
+    public Set<Genero> getGeneros() {
+        return generos;
+    }
+
+    public void setGeneros(Set<Genero> generos) {
+        this.generos = generos;
     }
 }
