@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Catalogo filmes</title>
+    <link href="style.css" rel="stylesheet"/>
+    <link href="pipoca.icon.ico" rel="shortcut icon"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Filmes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Aqui você encontra os melhores filmes!</h1>
+
+    <div class="top-controls">
+        <input id="pesquisa" placeholder="Pesquisar por título ou ID do diretor"/>
+        <select id="filtroGenero">
+            <option value="Todos">Todas as classificações</option>
+        </select>
+        <button id="novoFilme">Adicionar Filme</button>
+    </div>
+
+    <div class="galeria" id="listaFilmes"></div>
+
+    <script>
+        const listaFilmes = document.getElementById("listaFilmes");
+        const filtroGenero = document.getElementById("filtroGenero");
+        const pesquisa = document.getElementById("pesquisa");
+        const novoFilme = document.getElementById("novoFilme");
+
+        let filmesCarregados = [];
+
+        async function carregarFilmes() {
+            try {
+                const resposta = await fetch("/filmes");
+
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar filmes");
+                }
+
+                filmesCarregados = await resposta.json();
+
+                preencherFiltro();
+                aplicarFiltros();
+
+            } catch (erro) {
+                listaFilmes.innerHTML = "<p>Erro ao carregar filmes. Verifique se a API está rodando.</p>";
+            }
+        }
+
+        function preencherFiltro() {
+            filtroGenero.innerHTML = `<option value="Todos">Todas as classificações</option>`;
+
+            const classificacoes = [...new Set(
+                filmesCarregados
+                    .map(filme => filme.classificacao)
+                    .filter(classificacao => classificacao)
+            )];
+
+            classificacoes.forEach(classificacao => {
+                filtroGenero.innerHTML += `<option value="${classificacao}">${classificacao}</option>`;
+            });
+        }
+
+        function aplicarFiltros() {
+            const texto = pesquisa.value.toLowerCase();
+            const classificacaoSelecionada = filtroGenero.value;
+
+            const filmesFiltrados = filmesCarregados.filter(filme => {
+                const titulo = filme.titulo ? filme.titulo.toLowerCase() : "";
+                const idDiretor = filme.idDiretor ? String(filme.idDiretor) : "";
+
+                const batePesquisa =
+                    titulo.includes(texto) ||
+                    idDiretor.includes(texto);
+
+                const bateClassificacao =
+                    classificacaoSelecionada === "Todos" ||
+                    filme.classificacao === classificacaoSelecionada;
+
+                return batePesquisa && bateClassificacao;
+            });
+
+            mostrarFilmes(filmesFiltrados);
+        }
+
+        function mostrarFilmes(filmes) {
+            listaFilmes.innerHTML = "";
+
+            if (filmes.length === 0) {
+                listaFilmes.innerHTML = "<p>Nenhum filme encontrado.</p>";
+                return;
+            }
+
+            filmes.forEach(filme => {
+                const item = document.createElement("div");
+                item.className = "item";
+
+                item.innerHTML = `
+                    <div class="poster-placeholder">${filme.titulo}</div>
+
+                    <div class="painel">
+                        <h2>${filme.titulo}</h2>
+                        <h3>Ano de lançamento: ${formatarAno(filme.lancamento)}</h3>
+                        <h3>Classificação: ${filme.classificacao}</h3>
+                        <h3>Duração: ${filme.duracaoMin} min</h3>
+                        <h3>ID Diretor: ${filme.idDiretor}</h3>
+
+                        <button onclick="verMais(${filme.idFilme})">Ver mais</button>
+                        <button onclick="excluirFilme(${filme.idFilme})">Excluir</button>
+                    </div>
+                `;
+
+                listaFilmes.appendChild(item);
+            });
+        }
+
+        function formatarAno(data) {
+            if (!data) {
+                return "Não informado";
+            }
+
+            return String(data).substring(0, 4);
+        }
+
+        function verMais(id) {
+            const filme = filmesCarregados.find(filme => filme.idFilme === id);
+
+            if (!filme) {
+                alert("Filme não encontrado.");
+                return;
+            }
+
+            alert(
+                `Título: ${filme.titulo}\n` +
+                `Lançamento: ${filme.lancamento}\n` +
+                `Classificação: ${filme.classificacao}\n` +
+                `Duração: ${filme.duracaoMin} min\n` +
+                `ID Diretor: ${filme.idDiretor}`
+            );
+        }
+
+        async function excluirFilme(id) {
+            const confirmar = confirm("Excluir este filme?");
+
+            if (!confirmar) {
+                return;
+            }
+
+            try {
+                const resposta = await fetch(`/filmes/${id}`, {
+                    method: "DELETE"
+                });
+
+                if (!resposta.ok) {
+                    throw new Error("Erro ao excluir filme");
+                }
+
+                await carregarFilmes();
+
+            } catch (erro) {
+                alert("Erro ao excluir filme.");
+            }
+        }
+
+        async function adicionarFilme() {
+            const titulo = prompt("Título do filme:");
+            if (!titulo) return;
+
+            const lancamento = prompt("Data de lançamento no formato AAAA-MM-DD:", "2024-01-01");
+            if (!lancamento) return;
+
+            const classificacao = prompt("Classificação indicativa:", "12");
+            if (!classificacao) return;
+
+            const duracaoMin = Number(prompt("Duração em minutos:", "120"));
+            if (!duracaoMin) return;
+
+            const idDiretor = Number(prompt("ID do diretor:", "1"));
+            if (!idDiretor) return;
+
+            const novoFilme = {
+                titulo: titulo,
+                lancamento: lancamento,
+                classificacao: classificacao,
+                duracaoMin: duracaoMin,
+                idDiretor: idDiretor
+            };
+
+            try {
+                const resposta = await fetch("/filmes", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(novoFilme)
+                });
+
+                if (!resposta.ok) {
+                    throw new Error("Erro ao adicionar filme");
+                }
+
+                await carregarFilmes();
+
+            } catch (erro) {
+                alert("Erro ao adicionar filme. Verifique os dados e a API.");
+            }
+        }
+
+        pesquisa.oninput = aplicarFiltros;
+        filtroGenero.onchange = aplicarFiltros;
+        novoFilme.onclick = adicionarFilme;
+
+        carregarFilmes();
+    </script>
+</body>
+</html>
