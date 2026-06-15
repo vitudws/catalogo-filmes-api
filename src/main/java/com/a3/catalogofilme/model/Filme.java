@@ -38,10 +38,13 @@ public class Filme {
     // ID do diretor relacionado ao filme.
     @Column(name = "id_diretor")
     private Integer idDiretor;
-    // Relação entre filme e diretor. Um filme tem um diretor.
-    @ManyToOne 
+
+    // Objeto com os dados do diretor.
+    // insertable=false e updatable=false porque quem salva no banco é o campo idDiretor.
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_diretor", insertable = false, updatable = false)
     private Diretor diretor;
+
     // Relação muitos-para-muitos entre filmes e gêneros.
     // A tabela genero_filme liga id_filme com id_genero.
     @ManyToMany(fetch = FetchType.EAGER)
@@ -99,6 +102,7 @@ public class Filme {
     public void setIdDiretor(Integer idDiretor) {
         this.idDiretor = idDiretor;
     }
+
     public Diretor getDiretor() {
         return diretor;
     }
