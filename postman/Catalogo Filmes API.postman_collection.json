@@ -1,0 +1,378 @@
+{
+  "info": {
+    "_postman_id": "a4ae7144-2ffa-414a-a15b-1e65425f5b07",
+    "name": "Catalogo Filmes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55901986"
+  },
+  "item": [
+    {
+      "name": "http://localhost:8080/filmes/1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/filmes/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "filmes",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Buscar filme por ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/filmes/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "filmes",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 14 Jun 2026 18:31:14 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"classificacao\": \"12\",\n    \"duracaoMin\": 127,\n    \"idDiretor\": 1,\n    \"idFilme\": 1,\n    \"lancamento\": \"1993-06-11\",\n    \"titulo\": \"Jurassic Park\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "http://localhost:8080/filmes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/filmes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "filmes"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Listar filmes",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/filmes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "filmes"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "7262"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 14 Jun 2026 18:35:03 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 127,\n        \"idDiretor\": 1,\n        \"idFilme\": 1,\n        \"lancamento\": \"1993-06-11\",\n        \"titulo\": \"Jurassic Park\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 175,\n        \"idDiretor\": 24,\n        \"idFilme\": 2,\n        \"lancamento\": \"1972-03-24\",\n        \"titulo\": \"O Poderoso Chefão\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 154,\n        \"idDiretor\": 3,\n        \"idFilme\": 3,\n        \"lancamento\": \"1994-10-14\",\n        \"titulo\": \"Pulp Fiction\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 148,\n        \"idDiretor\": 4,\n        \"idFilme\": 4,\n        \"lancamento\": \"2010-07-16\",\n        \"titulo\": \"A Origem\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 162,\n        \"idDiretor\": 5,\n        \"idFilme\": 5,\n        \"lancamento\": \"2009-12-18\",\n        \"titulo\": \"Avatar\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 101,\n        \"idDiretor\": 6,\n        \"idFilme\": 6,\n        \"lancamento\": \"1999-04-16\",\n        \"titulo\": \"Tudo Sobre Minha Mãe\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 132,\n        \"idDiretor\": 7,\n        \"idFilme\": 7,\n        \"lancamento\": \"2019-05-30\",\n        \"titulo\": \"Parasita\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 109,\n        \"idDiretor\": 8,\n        \"idFilme\": 8,\n        \"lancamento\": \"1960-09-08\",\n        \"titulo\": \"Psicose\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 146,\n        \"idDiretor\": 9,\n        \"idFilme\": 9,\n        \"lancamento\": \"1980-05-23\",\n        \"titulo\": \"O Iluminado\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 130,\n        \"idDiretor\": 10,\n        \"idFilme\": 10,\n        \"lancamento\": \"2002-08-30\",\n        \"titulo\": \"Cidade de Deus\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 118,\n        \"idDiretor\": 11,\n        \"idFilme\": 11,\n        \"lancamento\": \"2006-10-11\",\n        \"titulo\": \"O Labirinto do Fauno\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 99,\n        \"idDiretor\": 12,\n        \"idFilme\": 12,\n        \"lancamento\": \"2014-03-07\",\n        \"titulo\": \"O Grande Hotel Budapeste\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 155,\n        \"idDiretor\": 13,\n        \"idFilme\": 13,\n        \"lancamento\": \"2021-10-22\",\n        \"titulo\": \"Duna\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 101,\n        \"idDiretor\": 14,\n        \"idFilme\": 14,\n        \"lancamento\": \"2003-10-03\",\n        \"titulo\": \"Encontros e Desencontros\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 114,\n        \"idDiretor\": 15,\n        \"idFilme\": 15,\n        \"lancamento\": \"2023-07-20\",\n        \"titulo\": \"Barbie\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 155,\n        \"idDiretor\": 16,\n        \"idFilme\": 16,\n        \"lancamento\": \"2000-05-05\",\n        \"titulo\": \"Gladiador\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 139,\n        \"idDiretor\": 17,\n        \"idFilme\": 17,\n        \"lancamento\": \"1999-10-15\",\n        \"titulo\": \"Clube da Luta\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 178,\n        \"idDiretor\": 18,\n        \"idFilme\": 18,\n        \"lancamento\": \"2001-12-19\",\n        \"titulo\": \"O Senhor dos Anéis: A Sociedade do Anel\"\n    },\n    {\n        \"classificacao\": \"L\",\n        \"duracaoMin\": 121,\n        \"idDiretor\": 19,\n        \"idFilme\": 19,\n        \"lancamento\": \"0177-05-25\",\n        \"titulo\": \"Star Wars: Uma Nova Esperança\"\n    },\n    {\n        \"classificacao\": \"L\",\n        \"duracaoMin\": 105,\n        \"idDiretor\": 20,\n        \"idFilme\": 20,\n        \"lancamento\": \"1990-12-07\",\n        \"titulo\": \"Edward Mãos de Tesoura\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 146,\n        \"idDiretor\": 2,\n        \"idFilme\": 21,\n        \"lancamento\": \"1990-09-19\",\n        \"titulo\": \"Os Bons Companheiros\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 153,\n        \"idDiretor\": 3,\n        \"idFilme\": 22,\n        \"lancamento\": \"2009-10-09\",\n        \"titulo\": \"Bastardos Inglórios\"\n    },\n    {\n        \"classificacao\": \"10\",\n        \"duracaoMin\": 169,\n        \"idDiretor\": 4,\n        \"idFilme\": 23,\n        \"lancamento\": \"2014-11-06\",\n        \"titulo\": \"Interstellar\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 137,\n        \"idDiretor\": 5,\n        \"idFilme\": 24,\n        \"lancamento\": \"1991-08-30\",\n        \"titulo\": \"O Exterminador do Futuro 2\"\n    },\n    {\n        \"classificacao\": \"L\",\n        \"duracaoMin\": 125,\n        \"idDiretor\": 22,\n        \"idFilme\": 25,\n        \"lancamento\": \"2001-07-20\",\n        \"titulo\": \"A Viagem de Chihiro\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 104,\n        \"idDiretor\": 26,\n        \"idFilme\": 26,\n        \"lancamento\": \"2017-05-18\",\n        \"titulo\": \"Corra!\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 127,\n        \"idDiretor\": 27,\n        \"idFilme\": 27,\n        \"lancamento\": \"2018-06-21\",\n        \"titulo\": \"Hereditário\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 109,\n        \"idDiretor\": 28,\n        \"idFilme\": 28,\n        \"lancamento\": \"2019-10-31\",\n        \"titulo\": \"O Farol\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 121,\n        \"idDiretor\": 29,\n        \"idFilme\": 29,\n        \"lancamento\": \"2014-07-31\",\n        \"titulo\": \"Guardiões da Galáxia\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 113,\n        \"idDiretor\": 31,\n        \"idFilme\": 30,\n        \"lancamento\": \"2017-07-27\",\n        \"titulo\": \"Baby Driver\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 127,\n        \"idDiretor\": 17,\n        \"idFilme\": 31,\n        \"lancamento\": \"1995-12-15\",\n        \"titulo\": \"Seven: Os Sete Crimes Capitais\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 108,\n        \"idDiretor\": 35,\n        \"idFilme\": 32,\n        \"lancamento\": \"2004-03-19\",\n        \"titulo\": \"O Despertar da Mente\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 120,\n        \"idDiretor\": 36,\n        \"idFilme\": 33,\n        \"lancamento\": \"1989-07-21\",\n        \"titulo\": \"Faça a Coisa Certa\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 122,\n        \"idDiretor\": 37,\n        \"idFilme\": 34,\n        \"lancamento\": \"2007-11-09\",\n        \"titulo\": \"Onde os Fracos Não Têm Vez\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 136,\n        \"idDiretor\": 38,\n        \"idFilme\": 35,\n        \"lancamento\": \"1999-05-21\",\n        \"titulo\": \"Matrix\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 91,\n        \"idDiretor\": 39,\n        \"idFilme\": 36,\n        \"lancamento\": \"2013-10-11\",\n        \"titulo\": \"Gravidade\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 156,\n        \"idDiretor\": 40,\n        \"idFilme\": 37,\n        \"lancamento\": \"2015-12-25\",\n        \"titulo\": \"O Regresso\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 107,\n        \"idDiretor\": 41,\n        \"idFilme\": 38,\n        \"lancamento\": \"2021-04-29\",\n        \"titulo\": \"Nomadland\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 105,\n        \"idDiretor\": 44,\n        \"idFilme\": 39,\n        \"lancamento\": \"2023-06-02\",\n        \"titulo\": \"Vidas Passadas\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 131,\n        \"idDiretor\": 45,\n        \"idFilme\": 40,\n        \"lancamento\": \"2008-09-04\",\n        \"titulo\": \"Guerra ao Terror\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 154,\n        \"idDiretor\": 1,\n        \"idFilme\": 41,\n        \"lancamento\": \"1985-12-18\",\n        \"titulo\": \"A Cor Púrpura\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 151,\n        \"idDiretor\": 2,\n        \"idFilme\": 42,\n        \"lancamento\": \"2006-10-06\",\n        \"titulo\": \"Os Infiltrados\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 165,\n        \"idDiretor\": 3,\n        \"idFilme\": 43,\n        \"lancamento\": \"2013-01-18\",\n        \"titulo\": \"Django Livre\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 152,\n        \"idDiretor\": 4,\n        \"idFilme\": 44,\n        \"lancamento\": \"2008-07-18\",\n        \"titulo\": \"Batman: O Cavaleiro das Trevas\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 194,\n        \"idDiretor\": 5,\n        \"idFilme\": 45,\n        \"lancamento\": \"1997-12-19\",\n        \"titulo\": \"Titanic\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 121,\n        \"idDiretor\": 6,\n        \"idFilme\": 46,\n        \"lancamento\": \"2006-05-19\",\n        \"titulo\": \"Volver\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 112,\n        \"idDiretor\": 8,\n        \"idFilme\": 47,\n        \"lancamento\": \"1954-09-01\",\n        \"titulo\": \"Janela Indiscreta\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 159,\n        \"idDiretor\": 9,\n        \"idFilme\": 48,\n        \"lancamento\": \"1999-07-16\",\n        \"titulo\": \"De Olhos Bem Fechados\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 121,\n        \"idDiretor\": 10,\n        \"idFilme\": 49,\n        \"lancamento\": \"2008-09-12\",\n        \"titulo\": \"Ensaio Sobre a Cegueira\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 123,\n        \"idDiretor\": 11,\n        \"idFilme\": 50,\n        \"lancamento\": \"2017-12-01\",\n        \"titulo\": \"A Forma da Água\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 164,\n        \"idDiretor\": 13,\n        \"idFilme\": 51,\n        \"lancamento\": \"2017-10-05\",\n        \"titulo\": \"Blade Runner 2049\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 201,\n        \"idDiretor\": 18,\n        \"idFilme\": 52,\n        \"lancamento\": \"2003-12-25\",\n        \"titulo\": \"O Senhor dos Anéis: O Retorno do Rei\"\n    },\n    {\n        \"classificacao\": \"12\",\n        \"duracaoMin\": 126,\n        \"idDiretor\": 20,\n        \"idFilme\": 53,\n        \"lancamento\": \"1989-06-23\",\n        \"titulo\": \"Batman\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 162,\n        \"idDiretor\": 21,\n        \"idFilme\": 54,\n        \"lancamento\": \"1985-06-01\",\n        \"titulo\": \"Ran\"\n    },\n    {\n        \"classificacao\": \"L\",\n        \"duracaoMin\": 86,\n        \"idDiretor\": 22,\n        \"idFilme\": 55,\n        \"lancamento\": \"1988-04-16\",\n        \"titulo\": \"Meu Amigo Totoro\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 120,\n        \"idDiretor\": 23,\n        \"idFilme\": 56,\n        \"lancamento\": \"1986-09-19\",\n        \"titulo\": \"Veludo Azul\"\n    },\n    {\n        \"classificacao\": \"14\",\n        \"duracaoMin\": 202,\n        \"idDiretor\": 24,\n        \"idFilme\": 57,\n        \"lancamento\": \"1974-12-20\",\n        \"titulo\": \"O Poderoso Chefão 2\"\n    },\n    {\n        \"classificacao\": \"16\",\n        \"duracaoMin\": 116,\n        \"idDiretor\": 26,\n        \"idFilme\": 58,\n        \"lancamento\": \"2019-03-21\",\n        \"titulo\": \"Nós\"\n    },\n    {\n        \"classificacao\": \"18\",\n        \"duracaoMin\": 148,\n        \"idDiretor\": 27,\n        \"idFilme\": 59,\n        \"lancamento\": \"2019-07-03\",\n        \"titulo\": \"Midsommar\"\n    },\n    {\n        \"classificacao\": \"L\",\n        \"duracaoMin\": 117,\n        \"idDiretor\": 29,\n        \"idFilme\": 60,\n        \"lancamento\": \"2018-12-14\",\n        \"titulo\": \"Homem-Aranha: No Aranhaverso\"\n    }\n]"
+        }
+      ]
+    },
+    {
+      "name": "http://localhost:8080/filmes",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"titulo\": \"Filme Teste\",\r\n\"lancamento\": \"2024-01-01\",\r\n\"classificacao\": \"12\",\r\n\"duracaoMin\": 120,\r\n\"idDiretor\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/filmes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "filmes"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Criar filme",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"titulo\": \"Filme Teste\",\r\n\"lancamento\": \"2024-01-01\",\r\n\"classificacao\": \"12\",\r\n\"duracaoMin\": 120,\r\n\"idDiretor\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/filmes/62",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "filmes",
+                "62"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "115"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 14 Jun 2026 18:36:45 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"classificacao\": \"12\",\n    \"duracaoMin\": 120,\n    \"idDiretor\": 1,\n    \"idFilme\": 62,\n    \"lancamento\": \"2024-01-01\",\n    \"titulo\": \"Filme Teste\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "http://localhost:8080/filmes",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"titulo\": \"Filme Teste\",\r\n\"lancamento\": \"2024-01-01\",\r\n\"classificacao\": \"12\",\r\n\"duracaoMin\": 120,\r\n\"idDiretor\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/filmes/62",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "filmes",
+            "62"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Atualizar filme",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"titulo\": \"Filme Teste\",\r\n\"lancamento\": \"2024-01-01\",\r\n\"classificacao\": \"12\",\r\n\"duracaoMin\": 120,\r\n\"idDiretor\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/filmes/62",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "filmes",
+                "62"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 14 Jun 2026 18:37:50 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"classificacao\": \"12\",\n    \"duracaoMin\": 120,\n    \"idDiretor\": 2,\n    \"idFilme\": 62,\n    \"lancamento\": \"2024-01-01\",\n    \"titulo\": \"Filme Teste\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "http://localhost:8080/filmes/62",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"titulo\": \"Filme Teste\",\r\n\"lancamento\": \"2024-01-01\",\r\n\"classificacao\": \"12\",\r\n\"duracaoMin\": 120,\r\n\"idDiretor\": 2\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/filmes/62",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "filmes",
+            "62"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Deletar filme",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"titulo\": \"Filme Teste\",\r\n\"lancamento\": \"2024-01-01\",\r\n\"classificacao\": \"12\",\r\n\"duracaoMin\": 120,\r\n\"idDiretor\": 2\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/filmes/62",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "filmes",
+                "62"
+              ]
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Sun, 14 Jun 2026 18:39:02 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    }
+  ]
+}

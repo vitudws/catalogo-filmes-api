@@ -1,35 +1,87 @@
 package com.a3.catalogofilme.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
-
+/**
+ * Entidade que representa a tabela filmes do banco de dados.
+ * Cada atributo está ligado a uma coluna da tabela.
+ */
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-
+@Table(name = "filmes")
 public class Filme {
+
+    // Chave primária da tabela filmes.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_filme")
+    private Integer idFilme;
+
+    // Nome do filme.
+    @Column(name = "titulo")
     private String titulo;
-    private String genero;
-    private int anoLancamento;
-    private String diretor;
-    private String duracao;
+
+    // Data de lançamento do filme.
+    @Column(name = "lancamento")
+    private LocalDate lancamento;
+
+    // Classificação indicativa do filme.
+    @Column(name = "classificacao")
     private String classificacao;
+
+    // Duração do filme em minutos.
+    @Column(name = "duracao_min")
+    private Integer duracaoMin;
+
+    // ID do diretor relacionado ao filme.
+    @Column(name = "id_diretor")
+    private Integer idDiretor;
+
+    public Integer getIdFilme() {
+        return idFilme;
+    }
+
+    public void setIdFilme(Integer idFilme) {
+        this.idFilme = idFilme;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public LocalDate getLancamento() {
+        return lancamento;
+    }
+
+    public void setLancamento(LocalDate lancamento) {
+        this.lancamento = lancamento;
+    }
+
+    public String getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(String classificacao) {
+        this.classificacao = classificacao;
+    }
+
+    public Integer getDuracaoMin() {
+        return duracaoMin;
+    }
+
+    public void setDuracaoMin(Integer duracaoMin) {
+        this.duracaoMin = duracaoMin;
+    }
+
+    public Integer getIdDiretor() {
+        return idDiretor;
+    }
+
+    public void setIdDiretor(Integer idDiretor) {
+        this.idDiretor = idDiretor;
+    }
 }
-
-
-
-// Exemplo de JSON para cadastro ou atualização de um filme:
-
-//"titulo": "Interestelar",
-//"genero": "Ficção Científica",
-//"ano": 2014,
-//"diretor": "Christopher Nolan",
-//"duracao": 169,
-//"classificacao": "10 anos"
